@@ -9,6 +9,8 @@ public class TrysolApplication {
 	public static void main(String[] args)
 	{
 		SpringApplication.run(TrysolApplication.class, args);
+
+		System.out.println("Hello");
 	}
 
 }
