@@ -9,33 +9,33 @@ import com.trysol.irr.service.EmployeeService;
 
 public class EmployeeServiceImpl implements EmployeeService {
 
+//
+//
+//    private EmployeeRepository employeeRepository;
+//
+//    public Employee create(EmployeeCommand employeeCommand){
+//
+//
+//            employeeRepository.save(getEmployeeEntity(employeeCommand));
+//
+//        return null;
+//    }
 
 
-    private EmployeeRepository employeeRepository;
 
-    public Employee create(EmployeeCommand employeeCommand){
-
-
-            employeeRepository.save(getEmployeeEntity(employeeCommand));
-
-        return null;
-    }
-
-
-
-
-    private Employee getEmployeeEntity(EmployeeCommand employeeCommand) {
-
-        return Employee.builder().name(employeeCommand.getName())
-                .technology(employeeCommand.getTechnology())
-                .experience(employeeCommand.getExperience())
-                .email((employeeCommand.getEmail()))
-                .skillSet(employeeCommand.getSkillSet())
-                .aggrementStartDate(employeeCommand.getAggrementStartDate())
-                .aggrementendDate(employeeCommand.getAggrementEndDate())
-                .client(employeeCommand.getClient())
-                .projectDuration((employeeCommand.getProjectDuration()))
-                .build();
-
-    }
+//
+//    private Employee getEmployeeEntity(EmployeeCommand employeeCommand) {
+//
+//        return Employee.builder().name(employeeCommand.getName())
+//                .technology(employeeCommand.getTechnology())
+//                .experience(employeeCommand.getExperience())
+//                .email((employeeCommand.getEmail()))
+//                .skillSet(employeeCommand.getSkillSet())
+//                .aggrementStartDate(employeeCommand.getAggrementStartDate())
+//                .aggrementendDate(employeeCommand.getAggrementEndDate())
+//                .client(employeeCommand.getClient())
+//                .projectDuration((employeeCommand.getProjectDuration()))
+//                .build();
+//
+//    }
 }

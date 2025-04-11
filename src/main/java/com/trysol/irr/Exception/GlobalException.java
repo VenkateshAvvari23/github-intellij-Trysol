@@ -70,6 +70,19 @@ public class GlobalException {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(value = UserNotFound.class)
+    public ResponseEntity<ErrorResponse> handleEntityNotFound(UserNotFound ex, HttpServletRequest request) {
+
+        String requestUrl = request.getRequestURI();
+
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMessage(ex.getMessage());
+        errorResponse.setPath(requestUrl);
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);  // Corrected status code
+    }
+
+
     }
 
 

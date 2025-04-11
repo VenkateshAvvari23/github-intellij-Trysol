@@ -3,6 +3,7 @@ package com.trysol.irr.controller;
 
 import com.trysol.irr.Exception.InvalidCredentialsException;
 import com.trysol.irr.Exception.UserAlreadyExistsException;
+import com.trysol.irr.Exception.UserNotFound;
 import com.trysol.irr.controller.command.LoginCommand;
 import com.trysol.irr.controller.command.RegisterCommand;
 import com.trysol.irr.Exception.IllegalArgumentException;
@@ -51,5 +52,29 @@ public class LoginController {
     }
 
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id)throws UserNotFound {
+
+        String response = userService.deleteId(id);
+       return new ResponseEntity<>(response,HttpStatus.OK);
+
+
+       }
+
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> update(){
+
+        return null;
+    }
+
+@PostMapping("/forgotpassword")
+    public ResponseEntity<String> forgotpassword(@RequestBody RegisterCommand registerCommand){
+
+
+      String response = userService.forgotPassword(registerCommand);
+
+        return new  ResponseEntity<>(response,HttpStatus.OK);
+    }
 
 }

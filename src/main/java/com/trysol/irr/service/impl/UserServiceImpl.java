@@ -2,6 +2,7 @@ package com.trysol.irr.service.impl;
 
 import com.trysol.irr.Exception.InvalidCredentialsException;
 import com.trysol.irr.Exception.UserAlreadyExistsException;
+import com.trysol.irr.Exception.UserNotFound;
 import com.trysol.irr.controller.command.LoginCommand;
 import com.trysol.irr.controller.command.RegisterCommand;
 import com.trysol.irr.Exception.IllegalArgumentException;
@@ -19,29 +20,27 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository userRepository;  
 
 
-@Override
-public UserDto login(LoginCommand loginCommand) throws InvalidCredentialsException {
-    Optional<User> user = userRepository.findByUsername(loginCommand.getUsername());
+    @Override
+    public UserDto login(LoginCommand loginCommand) throws InvalidCredentialsException {
+        Optional<User> user = userRepository.findByUsername(loginCommand.getUsername());
 
-    if ("Test".equals(loginCommand.getUsername()) && "password@123".equals(loginCommand.getPassword())) {
+        if ("Test".equals(loginCommand.getUsername()) && "password@123".equals(loginCommand.getPassword())) {
 
-        return getUserDto(loginCommand.getUsername(), loginCommand.getPassword());
+            return getUserDto(loginCommand.getUsername(), loginCommand.getPassword());
+        } else if (user.isPresent() && user.get().getUsername().equals(loginCommand.getUsername()) && user.get().getPassword().equals(loginCommand.getPassword())) {
+
+            return getUserDto(loginCommand.getUsername(), loginCommand.getPassword());
+        } else {
+
+            throw new InvalidCredentialsException("Invalid username or password");
+        }
     }
-    else if (user.isPresent() && user.get().getUsername().equals(loginCommand.getUsername())&& user.get().getPassword().equals(loginCommand.getPassword())) {
-
-        return getUserDto(loginCommand.getUsername(), loginCommand.getPassword());
-    } else {
-
-        throw new InvalidCredentialsException("Invalid username or password");
-    }
-}
 
 
-
-    public String register(RegisterCommand registerCommand)  throws UserAlreadyExistsException,IllegalArgumentException{
+    public String register(RegisterCommand registerCommand) throws UserAlreadyExistsException, IllegalArgumentException {
 
         Optional<User> user = userRepository.findByEmail(registerCommand.getEmail());
 
@@ -52,8 +51,8 @@ public UserDto login(LoginCommand loginCommand) throws InvalidCredentialsExcepti
             throw new IllegalArgumentException("Password does not match");
 
         else {
-             userRepository.save(getUserEntity(registerCommand));
-             return "User successfully registered";
+            userRepository.save(getUserEntity(registerCommand));
+            return "User successfully registered";
         }
     }
 
@@ -85,5 +84,67 @@ public UserDto login(LoginCommand loginCommand) throws InvalidCredentialsExcepti
 
     }
 
+
+    public String deleteId(Long id) throws UserNotFound {
+
+
+            if (id == null || !userRepository.existsById(id)) {
+                throw new UserNotFound("Employee not found with id: " + id);
+            }
+            userRepository.deleteById(id);
+           return "Employee deleted successfully";
+
+
+    }
+
+    @Override
+    public User update(Long id, RegisterCommand registerCommand) throws UserNotFound{
+
+        Optional<User> existingUserOpt = userRepository.findById(id);
+
+        if(existingUserOpt.isEmpty()){
+
+            throw new UserNotFound("Employee not found with id: " + id);
+        }
+
+        User existingUser = existingUserOpt.get();
+
+        // You can reuse getUserEntity to get updated fields
+        User updatedUser = getUserEntity(registerCommand);
+
+        // But keep the same ID (and maybe other fields you don't want to overwrite)
+        updatedUser.setId(existingUser.getId());
+
+        return userRepository.save(updatedUser);
+
+
+    }
+
+
+    public String forgotPassword(RegisterCommand registerCommand)throws UserNotFound {
+
+        Optional<User> optionalUser = userRepository.findByEmail(registerCommand.getEmail());
+
+        if (optionalUser.isPresent()){
+
+
+            User  user1 =  optionalUser.get();
+
+            if (!registerCommand.getPassword().equals(registerCommand.getConfirmPassword())) {
+                return "Password does not match.";
+            }
+            else {
+
+                user1.setPassword(registerCommand.getPassword());
+                userRepository.save(user1);
+                return "password is changed successfully";
+            }
+          }
+        else{
+
+             throw new UserNotFound("User not found with the given email");
+        }
+
+    }
 
 }

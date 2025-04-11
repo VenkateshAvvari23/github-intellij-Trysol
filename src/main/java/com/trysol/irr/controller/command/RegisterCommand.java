@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RegisterCommand {
+public class  RegisterCommand {
 
 
     @NotBlank(message = "Username must not be blank")
