@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/api")
+@RequestMapping("/api")
 public class LoginController {
 
     @Autowired
@@ -62,14 +62,17 @@ public class LoginController {
        }
 
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<String> update(){
+//    @PutMapping("/update/{id}")
+//    public ResponseEntity<String> update(@PathVariable long id, RegisterCommand registerCommand){
+//
+//
+//        userService.update(id,registerCommand);
+//
+//        return null;
+//    }
 
-        return null;
-    }
-
-@PostMapping("/forgotpassword")
-    public ResponseEntity<String> forgotpassword(@RequestBody RegisterCommand registerCommand){
+    @PostMapping("/forgotPassword")
+    public ResponseEntity<String> forgotPassword(@RequestBody RegisterCommand registerCommand){
 
 
       String response = userService.forgotPassword(registerCommand);

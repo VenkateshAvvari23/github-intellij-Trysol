@@ -37,7 +37,7 @@ public class EmployeeCommand {
 
     private String cvReady;
 
-    private String linkedIn;
+    private String linkedin;
 
     private String dateOfNDA;
 
@@ -53,6 +53,6 @@ public class EmployeeCommand {
 
     private String email;
 
-    private Long mobileNo;
+    private Long mobileNum;
 
 }

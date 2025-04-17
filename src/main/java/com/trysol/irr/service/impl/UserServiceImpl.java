@@ -11,6 +11,7 @@ import com.trysol.irr.entity.User;
 import com.trysol.irr.repository.UserRepository;
 import com.trysol.irr.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +21,10 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository userRepository;  
+    private UserRepository userRepository;
 
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDto login(LoginCommand loginCommand) throws InvalidCredentialsException {
@@ -97,28 +100,30 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public User update(Long id, RegisterCommand registerCommand) throws UserNotFound{
-
-        Optional<User> existingUserOpt = userRepository.findById(id);
-
-        if(existingUserOpt.isEmpty()){
-
-            throw new UserNotFound("Employee not found with id: " + id);
-        }
-
-        User existingUser = existingUserOpt.get();
-
-        // You can reuse getUserEntity to get updated fields
-        User updatedUser = getUserEntity(registerCommand);
-
-        // But keep the same ID (and maybe other fields you don't want to overwrite)
-        updatedUser.setId(existingUser.getId());
-
-        return userRepository.save(updatedUser);
-
-
-    }
+//    @Override
+//    public User update(Long id, RegisterCommand registerCommand) throws UserNotFound{
+//
+//        Optional<User> existingUserOpt = userRepository.findById(id);
+//
+//        if(existingUserOpt.isEmpty()){
+//
+//            throw new UserNotFound("Employee not found with id: " + id);
+//        }
+//
+//        User existingUser = existingUserOpt.get();
+//
+//        existingUser.setUsername(registerCommand.getUsername());
+//        existingUser.setEmail(registerCommand.getEmail());
+//        existingUser.setPhoneNo(registerCommand.getPhone());
+//
+//        //    User updatedUser = getUserEntity(registerCommand);
+//
+//   //     updatedUser.setId(existingUser.getId());
+//
+//        return userRepository.save(existingUser);
+//
+//
+//    }
 
 
     public String forgotPassword(RegisterCommand registerCommand)throws UserNotFound {
@@ -127,8 +132,7 @@ public class UserServiceImpl implements UserService {
 
         if (optionalUser.isPresent()){
 
-
-            User  user1 =  optionalUser.get();
+            User user1 =  optionalUser.get();
 
             if (!registerCommand.getPassword().equals(registerCommand.getConfirmPassword())) {
                 return "Password does not match.";

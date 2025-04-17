@@ -26,7 +26,7 @@ public interface UserService {
 
     public String deleteId(Long id)throws UserNotFound;
 
-    public User update(Long id, RegisterCommand registerCommand);
+ //   public User update(Long id, RegisterCommand registerCommand);
 
     public String forgotPassword(RegisterCommand registerCommand)throws UserNotFound;
 }

@@ -79,7 +79,7 @@ public class GlobalException {
         errorResponse.setMessage(ex.getMessage());
         errorResponse.setPath(requestUrl);
 
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);  // Corrected status code
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
 

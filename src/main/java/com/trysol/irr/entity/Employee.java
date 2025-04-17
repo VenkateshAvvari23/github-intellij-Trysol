@@ -18,7 +18,7 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sNo")
+    @Column(name = "id")
     private Long sNo;
 
     @Column(name ="Mode")
@@ -42,10 +42,10 @@ public class Employee {
     @Column(name ="CVReady")
     private String cvReady;
 
-    @Column(name = "linkedIn")
-    private String linkedIn;
+    @Column(name = "Linkedin")
+    private String linkedin;
 
-    @JsonFormat(pattern= "YYYY-MM-dd")
+    @JsonFormat(pattern= "yyyy-MM-dd")
     @Column(name = "DateOfNDA")
     private String dateOfNDA;
 
@@ -55,10 +55,10 @@ public class Employee {
     @Column(name = "Affidavit")
     private String affidavit;
 
-    @Column(name = "Salaryonddeployed")
+    @Column(name = "Salaryondeployed")
     private Double salaryOnDeployed;
 
-    @Column(name = "Salary")
+    @Column(name = "SalaryonBench")
     private Double salaryOnBench;
 
     @Column(name = "Readytotravel" )
@@ -68,7 +68,7 @@ public class Employee {
     private String email;
 
     @Column(name = "Mobilenum")
-    private Long mobileNo;
+    private Long mobileNum;
 
 
 }
